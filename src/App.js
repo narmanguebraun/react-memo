@@ -4,15 +4,15 @@ import './App.css';
 import SingleCard from './components/SingleCard'
 
 const cardImages = [
-  { "src": "/img/01.jpg" },
-  { "src": "/img/02.jpg" },
-  { "src": "/img/03.jpg" },
-  { "src": "/img/04.jpg" },
-  { "src": "/img/05.jpg" },
-  { "src": "/img/06.jpg" },
-  { "src": "/img/07.jpg" },
-  { "src": "/img/08.jpg" },
-  { "src": "/img/09.jpg" }
+  { "src": "/img/01.jpg", matched:false },
+  { "src": "/img/02.jpg", matched:false },
+  { "src": "/img/03.jpg", matched:false },
+  { "src": "/img/04.jpg", matched:false },
+  { "src": "/img/05.jpg", matched:false },
+  { "src": "/img/06.jpg", matched:false },
+  { "src": "/img/07.jpg", matched:false },
+  { "src": "/img/08.jpg", matched:false },
+  { "src": "/img/09.jpg", matched:false }
 ]
 
 function App() {
@@ -41,14 +41,23 @@ function App() {
     if (choiceOne && choiceTwo) {
 
       if (choiceOne.src === choiceTwo.src) {
-        console.log('those cards match')
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return {...card, matched: true}
+            } else {
+              return card
+            }
+          })
+        })
         resetTurn()
       } else {
-        console.log('those cards do not match')
         resetTurn()
       }
     }
   }, [choiceOne, choiceTwo])
+
+  console.log(cards)
 
   // reset choices and increase turn
   const resetTurn = () => {
